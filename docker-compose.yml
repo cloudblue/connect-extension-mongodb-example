@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  connect-extension-mongodb-example_dev:
+    container_name: connect-extension-mongodb-example_dev
+    build:
+      context: .
+    working_dir: /extension
+    command: cextrun -d -r
+    volumes: 
+      - .:/extension
+    env_file:
+      - .connect-extension-mongodb-example_dev.env
+
+  connect-extension-mongodb-example_bash:
+    container_name: connect-extension-mongodb-example_bash
+    build:
+      context: .
+    working_dir: /extension
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/extension
+    env_file:
+      - .connect-extension-mongodb-example_dev.env
+
