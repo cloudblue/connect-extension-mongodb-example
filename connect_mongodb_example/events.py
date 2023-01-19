@@ -3,7 +3,10 @@
 # Copyright (c) 2023, CloudBlue Connect
 # All rights reserved.
 #
+import urllib.parse
+
 import httpx
+import motor.motor_asyncio
 
 from connect.eaas.core.decorators import (
     event,
@@ -25,6 +28,7 @@ class ConnectExtensionMongodbExampleEventsApplication(EventsApplicationBase):
     )
     async def handle_asset_purchase_request_processing(self, request):
         await self.save_subscription_event_via_http_api_to_mongo_db(request)
+        await self.save_subscription_event_via_motor_to_mongo_db(request)
 
         return BackgroundResponse.done()
 
@@ -47,3 +51,19 @@ class ConnectExtensionMongodbExampleEventsApplication(EventsApplicationBase):
                 },
             )
             self.logger.info(r)
+
+    async def save_subscription_event_via_motor_to_mongo_db(self, request):
+        db_host = self.config['DB_HOST']
+        db_user = urllib.parse.quote(self.config['DB_USER'])
+        db_password = urllib.parse.quote(self.config['DB_PASSWORD'])
+
+        connection_str = f'mongodb+srv://{db_user}:{db_password}@{db_host}/'
+        client = motor.motor_asyncio.AsyncIOMotorClient(
+            connection_str, serverSelectionTimeoutMS=5000,
+        )
+
+        db = client[self.config['DB']]
+        collection = db[self.config['DRIVER_COLLECTION']]
+
+        r = await collection.insert_one(request)
+        self.logger.info(r)

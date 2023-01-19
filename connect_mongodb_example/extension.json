@@ -1,7 +1,7 @@
 {
   "name": "Stateful MongoDB Extension Project Example",
   "description": "Example of the Extension project that demonstrates usage of MongoDB storage",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "audience": ["vendor", "distributor"],
   "readme_url": "https://github.com/cloudblue/connect-extension-mongodb-example/blob/master/README.md",
   "changelog_url": "https://github.com/cloudblue/connect-extension-mongodb-example/blob/master/CHANGELOG.md"

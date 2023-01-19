@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "connect-extension-mongodb-example"
-version = "0.1.0"
+version = "0.2.0"
 description = "Example of the Extension project that demonstrates usage of MongoDB storage"
 authors = ["CloudBlue Connect"]
 license = "Apache Software License 2.0"
@@ -15,6 +15,7 @@ readme = "./README.md"
 [tool.poetry.dependencies]
 python = ">=3.8,<4"
 connect-eaas-core = ">=26.13,<27"
+motor = "3.*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
